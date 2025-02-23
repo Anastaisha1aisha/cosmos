@@ -12,13 +12,20 @@ if __name__ == '__main__':
     ship_image1 = pygame.image.load("Корабль_1.png").convert_alpha()
     ship_image2 = pygame.image.load("Корабль_2.png").convert_alpha()
     ship_image3 = pygame.image.load("Корабль_3.png").convert_alpha()
+    ship_image1_1 = pygame.image.load("Корабль_1_1.png").convert_alpha()
+    ship_image2_1 = pygame.image.load("Корабль_2_1.png").convert_alpha()
+    ship_image3_1 = pygame.image.load("Корабль_3_1.png").convert_alpha()
 
     ship_image1 = pygame.transform.scale(ship_image1, (150, 100))
     ship_image2 = pygame.transform.scale(ship_image2, (150, 100))
     ship_image3 = pygame.transform.scale(ship_image3, (150, 100))
+    ship_image1_1 = pygame.transform.scale(ship_image1_1, (150, 100))
+    ship_image2_1 = pygame.transform.scale(ship_image2_1, (150, 100))
+    ship_image3_1 = pygame.transform.scale(ship_image3_1, (150, 100))
+
 
     ship = ship_image1.get_rect(center=(screen_width // 2, screen_height // 2))
-    ship2 = ship_image1.get_rect(center=(screen_width // 4, screen_height // 4))
+    ship2 = ship_image1_1.get_rect(center=(screen_width // 4, screen_height // 4))
 
     ship_side = 0
     ship_side2 = 0
@@ -31,6 +38,7 @@ if __name__ == '__main__':
     ship_y_offset2 = 0
 
     current_image = ship_image1
+    current_image_2 = ship_image1_1
     image_index = 0
     last_switch_time = time.time()
     switch_interval = 0.01
@@ -61,14 +69,14 @@ if __name__ == '__main__':
                 image_index = 1 - image_index
                 last_switch_time = time.time()
 
-            current_image_2 = [ship_image2, ship_image3][image_index]
+            current_image_2 = [ship_image2_1, ship_image3_1][image_index]
 
             ship_x_offset2 += ship_speed * math.cos(math.radians(ship_side2))
             ship_y_offset2 -= ship_speed * math.sin(math.radians(ship_side2))
             ship_x_offset2 %= screen_width
             ship_y_offset2 %= screen_height
         else:
-            current_image_2 = ship_image1
+            current_image_2 = ship_image1_1
             ship_side2 += spin_speed
 
         screen.fill((0, 0, 0))
@@ -82,12 +90,14 @@ if __name__ == '__main__':
         y = ship.centery + ship_y_offset
         x_draw = x % screen_width
         y_draw = y % screen_height
-        if x < 0: x_draw += screen_width
-        if y < 0: y_draw += screen_height
+        if x < 0:
+            x_draw += screen_width
+        if y < 0:
+            y_draw += screen_height
         rotated_rect = rotated_ship.get_rect(center=(x_draw, y_draw))
         screen.blit(rotated_ship, rotated_rect)
 
-        rotated_ship2 = pygame.transform.rotate(current_image, ship_side2)
+        rotated_ship2 = pygame.transform.rotate(current_image_2, ship_side2)
         x2 = ship2.centerx + ship_x_offset2
         y2 = ship2.centery + ship_y_offset2
         x_draw2 = x2 % screen_width
