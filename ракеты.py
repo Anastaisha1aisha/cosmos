@@ -113,5 +113,27 @@ if __name__ == '__main__':
             pygame.display.flip()
 
 
-    game_process()
+    def menu():
+        while True:
+            screen.fill((0, 0, 0))
+            font = pygame.font.Font(None, 74)
+            text = font.render("Главное меню", True, (255, 255, 255))
+            text_rect = text.get_rect(center=(screen_width // 2, screen_height // 4))
+            screen.blit(text, text_rect)
+            button_play = pygame.Rect(screen_width // 2 - 100, screen_height // 2 - 25, 200, 50)
+            pygame.draw.rect(screen, (0, 0, 200), button_play)
+            text_play = font.render("Играть", True, (0, 0, 0))
+            text_rect_pl = text_play.get_rect(center=(screen_width // 2, screen_height // 2))
+            screen.blit(text_play, text_rect_pl)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    return
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if button_play.collidepoint(pygame.mouse.get_pos()):
+                        game_process()
+            pygame.display.flip()
+
+
+    menu()
     pygame.quit()
